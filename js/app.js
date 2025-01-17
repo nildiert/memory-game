@@ -1,234 +1,243 @@
-const icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
-const board = document.querySelector('.game-board');
-const reset = document.getElementById('reset');
-const replay = document.getElementById('replay');
-const form = document.getElementById('form');
-const difficulties = document.querySelectorAll("input[name='difficulty']");
-const timer = document.getElementById('timer');
-const ratingPerfect = document.getElementById('rating-perfect');
-const ratingAverage = document.getElementById('rating-average');
-const cardContainers = document.querySelectorAll('.card-container');
-const modal = document.querySelector('.modal');
-let clickCount = 0;
-let selectedCards = [];
-let iconClasses, sec, moves, wrongMoves, correctMoves, difficulty, difficultyClass, setTimer;
+// ---------------------
+// Variables globales
+// ---------------------
+const gameBoard = document.getElementById("gameBoard");
+const timerElement = document.getElementById("timer");
+const restartBtn = document.getElementById("restartBtn");
+const endGameModal = document.getElementById("endGameModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const finalTimeElement = document.getElementById("finalTime");
+const playerNameInput = document.getElementById("playerName");
+const saveScoreBtn = document.getElementById("saveScoreBtn");
+const scoreList = document.getElementById("scoreList");
 
-//shuffle function from https://bost.ocks.org/mike/shuffle/
-function shuffle(array) {
-	var m = array.length, t, i;
-	while (m) {
-		i = Math.floor(Math.random() * m--);
-		t = array[m];
-		array[m] = array[i];
-		array[i] = t;
-	}
+let cards = [];
+let flippedCards = [];
+let matchedCount = 0;
+let timer;
+let totalSeconds = 0;
+let isGameActive = false;
+
+// ---------------------
+// Función para generar el array con módulos duplicados
+// ---------------------
+function generateCardsArray() {
+  // Módulos: 1 a 12
+  const modules = [];
+  for (let i = 1; i <= 12; i++) {
+    modules.push(`Módulo ${i}`);
+  }
+  // Duplicar el array
+  const duplicatedModules = [...modules, ...modules];
+  // Mezclar el array
+  return shuffleArray(duplicatedModules);
 }
 
-// go over the radio buttons and check the difficulty selection
-function checkDifficulty(){
-	[].forEach.call(difficulties, function(input){
-		input.nextElementSibling.classList.remove('checked');
-		console.log(input.nextElementSibling)
-		if (input.value === 'easy' && input.checked === true) {
-			difficulty = 4;
-			difficultyClass = 'easy';
-			input.nextElementSibling.classList.add('checked');
-		} else if (input.value === 'normal' && input.checked === true) {
-			difficulty = 16;
-			difficultyClass = 'normal';
-			input.nextElementSibling.classList.add('checked');
-		} else if (input.value === 'hard' && input.checked === true) {
-			difficulty = 36;
-			difficultyClass = 'hard';
-			input.nextElementSibling.classList.add('checked');
-		}
-	});
+// ---------------------
+// Algoritmo de Fisher-Yates para mezclar
+// ---------------------
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
-function populate(num) {
-	iconClasses = [];
-	clickCount = 0;
-	board.innerHTML = '';
-	//LOGIC IS: shuffle the main array and slice half the number of cards
-	//this is to always get a random selection of icons
-	shuffle(icons);
-	let boardIcons = icons.slice(0, num/2);
-	//duplicate the array values to make pairs and shuffle this new array
-	boardIcons = boardIcons.concat(boardIcons);
-	shuffle(boardIcons);
-	//actually populate HTML
-	const fragment = document.createDocumentFragment();
-	for (let x = 0; x < num; x++) {
-		const cardContainer = document.createElement('div');
-		cardContainer.classList.add('card-container', difficultyClass);
-		const front = document.createElement('div');
-		const back = document.createElement('div');
-		front.classList.add('card', 'front');
-		back.classList.add('card', 'back');
-		const icon = document.createElement('i');
-		icon.classList.add('icon','fas', 'fa-' + boardIcons[x]);
-		back.appendChild(icon);
-		cardContainer.appendChild(front);
-		cardContainer.appendChild(back);
-		fragment.appendChild(cardContainer);
-	}
-	board.appendChild(fragment);
+// ---------------------
+// Crear y mostrar las cartas en el DOM
+// ---------------------
+function createBoard() {
+  // Limpiamos el tablero
+  gameBoard.innerHTML = "";
+  matchedCount = 0;
+  flippedCards = [];
+
+  // Generar array mezclado de "Módulo X"
+  const cardValues = generateCardsArray();
+
+  // Crear elementos de carta
+  cardValues.forEach((value) => {
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("card");
+
+    const cardInner = document.createElement("div");
+    cardInner.classList.add("card-inner");
+
+    // Lado trasero (oculto)
+    const cardBack = document.createElement("div");
+    cardBack.classList.add("card-back");
+    cardBack.textContent = "😊";
+
+    // Lado frontal (revelado)
+    const cardFront = document.createElement("div");
+    cardFront.classList.add("card-front");
+    cardFront.textContent = value;
+
+    cardInner.appendChild(cardBack);
+    cardInner.appendChild(cardFront);
+    cardElement.appendChild(cardInner);
+
+    // Añadir evento de click
+    cardElement.addEventListener("click", () => flipCard(cardElement, value));
+
+    // Agregar al gameBoard
+    gameBoard.appendChild(cardElement);
+  });
 }
 
-function stopwatch(){
-	sec+=1;
-	if (sec<60) {
-		timer.innerText = sec;
-	} else if (sec<3600) {
-		let minutes = Math.floor(sec/60);
-		let seconds = sec % 60;
-		timer.innerText = minutes+":"+seconds;
-	}
+// ---------------------
+// Manejo del flip de la carta
+// ---------------------
+function flipCard(cardElement, value) {
+  // Si la carta ya está volteada o si hay dos cartas volteadas, no hacer nada
+  if (cardElement.classList.contains("flipped") || flippedCards.length === 2) {
+    return;
+  }
+
+  cardElement.classList.add("flipped");
+  flippedCards.push({ cardElement, value });
+
+  // Revisar si hay dos cartas volteadas
+  if (flippedCards.length === 2) {
+    checkForMatch();
+  }
 }
 
-function rating(num) {
-	//star rating differs with difficulty. Allow as many wrong moves as card pairs, and then another 50% to next level. 
-	switch (difficultyClass) {
-		case 'easy' :
-			if (num === 2) {
-				ratingPerfect.classList.add('hide');
-			} else if (num === 3) {
-				ratingAverage.classList.add('hide');
-			};
-			break;
-		case 'normal' :
-			if (num === 8) {
-				ratingPerfect.classList.add('hide');
-			} else if (num === 12) {
-				ratingAverage.classList.add('hide');
-			};
-			break;
-		case 'hard' :
-			if (num === 18) {
-				ratingPerfect.classList.add('hide');
-			} else if (num === 27) {
-				ratingAverage.classList.add('hide');
-			};
-			break;
-	}
+// ---------------------
+// Verificar si las cartas coinciden
+// ---------------------
+function checkForMatch() {
+  const [card1, card2] = flippedCards;
+
+  if (card1.value === card2.value) {
+    // Coincidencia
+    matchedCount += 2;
+    flippedCards = [];
+
+    // Verificar si el juego ha terminado
+    if (matchedCount === 24) {
+      endGame();
+    }
+  } else {
+    // No coinciden, voltearlas de nuevo
+    setTimeout(() => {
+      card1.cardElement.classList.remove("flipped");
+      card2.cardElement.classList.remove("flipped");
+      flippedCards = [];
+    }, 1000);
+  }
 }
 
-function checkwin(num) {
-	//easy won with 2 correct moves, normal with 8 and hard with 18
-	let won;
-	switch (difficultyClass) {
-		case 'easy' :
-			if (num === 2) {
-				won = true;
-			};
-			break;
-		case 'normal' :
-			if (num === 8) {
-				won = true;	
-			};
-			break;
-		case 'hard' :
-			if (num === 18){
-				won = true;
-			};
-			break;
-	};
-	if (won === true) {
-		//wait 1 sec for the cards to flip right side up
-		setTimeout(function(){
-			//fill in and display modal
-			document.getElementById('final-time').innerText = timer.innerText;
-			document.getElementById('final-moves').innerText = moves;
-			document.getElementById('final-rating').innerHTML = document.getElementById('stars').innerHTML;
-			modal.classList.remove('hide');
-			//stop the stopwatch
-			clearInterval(setTimer);
-		}, 1000);
-	}
-}
-
-function matchChecker(e){
-	//LOGIC IS: make sure the click target is a card and prevent doubleclicking 
-	if (e.target.classList.contains('card') && !e.target.classList.contains('front-open')) {
-		//flip the card on click
-		e.target.classList.add('front-open');
-		e.target.nextElementSibling.classList.add('back-open');
-		//keep track of the class of the icons in the clicked cards
-		iconClasses.push(e.target.nextElementSibling.firstChild.classList[2]);
-		//collect the clicked card elements
-		selectedCards.push(e.target);
-		clickCount += 1;
-		//allow only two clicks and then verify the match
-		if (clickCount === 2) {
-			clickCount = 0;
-			//2 clicks make 1 move
-			moves +=1;
-			document.getElementById('moves').innerHTML = moves;
-			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
-			board.removeEventListener('click', matchChecker);
-			setTimeout(function(){
-				board.addEventListener('click', matchChecker);
-			}, 1000);
-			if (iconClasses[0]===iconClasses[1]) {
-				console.log('match');
-				correctMoves += 1;
-				//check if game is won
-				checkwin(correctMoves);
-				iconClasses = [];
-				//add the class 'correct' to keep the matched cards open
-				[].forEach.call(selectedCards, c =>{
-					c.classList.add('front-correct');
-					c.nextElementSibling.classList.add('back-correct');	
-				});
-			} else {
-				console.log('not match');
-				//remove stars if too many wrong moves are made, how many depends on the difficulty
-				wrongMoves +=1;
-				rating(wrongMoves);
-				//wait 1 second before closing mismatching cards, so the player can see what they were
-				setTimeout(function(){
-					iconClasses = [];
-					[].forEach.call(selectedCards, c =>{
-						c.classList.remove('front-open');
-						c.nextElementSibling.classList.remove('back-open');
-						selectedCards = [];
-					});
-				}, 1000);
-			}
-		}
-	}
-}
-
+// ---------------------
+// Iniciar el juego
+// ---------------------
 function startGame() {
-	//cleanup board and reset everything
-	sec = 0; 
-	moves = 0;
-	wrongMoves = 0;
-	correctMoves = 0;
-	timer.innerText = '0';
-	document.getElementById('moves').innerHTML = '0';
-	modal.classList.add('hide');
-	ratingPerfect.classList.remove('hide');
-	ratingAverage.classList.remove('hide');
-	clearInterval(setTimer);
-	//restart game logic
-	checkDifficulty();
-	populate(difficulty);
-	//start the timer on first click
-	board.addEventListener('click', function clickOnce(){
-		clearInterval(setTimer);
-		setTimer = setInterval(stopwatch, 1000);
-		board.removeEventListener('click', clickOnce)
-	});
+  createBoard();
+  startTimer();
+  isGameActive = true;
 }
 
-reset.addEventListener('click', startGame);
-replay.addEventListener('click', startGame);
-form.addEventListener('change', startGame);
-window.addEventListener('click', function(e){
-	if (e.target === modal) {
-		startGame();
-	}
+// ---------------------
+// Manejo del tiempo
+// ---------------------
+function startTimer() {
+  // Reiniciar si ya estaba activo
+  clearInterval(timer);
+  totalSeconds = 0;
+  timer = setInterval(() => {
+    totalSeconds++;
+    displayTime(totalSeconds);
+  }, 1000);
+}
+
+function displayTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  const formattedTime = 
+    `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
+  timerElement.textContent = `Tiempo: ${formattedTime}`;
+}
+
+// ---------------------
+// Terminar el juego
+// ---------------------
+function endGame() {
+  clearInterval(timer);
+  isGameActive = false;
+
+  // Mostrar el modal
+  endGameModal.style.display = "block";
+  finalTimeElement.textContent = totalSeconds;
+}
+
+// ---------------------
+// Cerrar modal
+// ---------------------
+closeModalBtn.addEventListener("click", () => {
+  endGameModal.style.display = "none";
 });
-board.addEventListener('click', matchChecker);
-window.addEventListener('load', startGame);
+
+// ---------------------
+// Guardar puntuación
+// ---------------------
+saveScoreBtn.addEventListener("click", saveScore);
+
+function saveScore() {
+  const playerName = playerNameInput.value.trim();
+  if (!playerName) return;
+  
+  // Guardamos en el localStorage (o en memoria) para la tabla
+  const scoreData = {
+    name: playerName,
+    time: totalSeconds
+  };
+
+  // Obtener la lista de scores guardada
+  let scores = JSON.parse(localStorage.getItem("scores")) || [];
+  scores.push(scoreData);
+
+  // Ordenar de menor a mayor tiempo (mejor tiempo primero)
+  scores.sort((a, b) => a.time - b.time);
+
+  // Guardar en localStorage
+  localStorage.setItem("scores", JSON.stringify(scores));
+
+  // Actualizar la tabla
+  updateScoreboard();
+
+  // Limpiar campo nombre
+  playerNameInput.value = "";
+  endGameModal.style.display = "none";
+}
+
+// ---------------------
+// Mostrar tabla de posiciones
+// ---------------------
+function updateScoreboard() {
+  scoreList.innerHTML = "";
+  const scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+  scores.forEach((score) => {
+    const li = document.createElement("li");
+    li.textContent = `${score.name} - ${score.time} segundos`;
+    scoreList.appendChild(li);
+  });
+}
+
+// ---------------------
+// Botón de reiniciar
+// ---------------------
+restartBtn.addEventListener("click", () => {
+  // Ocultar modal si estaba abierto
+  endGameModal.style.display = "none";
+  startGame();
+});
+
+// ---------------------
+// Al cargar la página
+// ---------------------
+window.addEventListener("DOMContentLoaded", () => {
+  updateScoreboard();
+  startGame();
+});
