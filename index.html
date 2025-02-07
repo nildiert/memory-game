@@ -2,42 +2,38 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Juego de Memoria - Módulos</title>
+  <title>Juego de Memoria - Imágenes</title>
   <link rel="stylesheet" href="css/app.css" />
+  <!-- Incluir canvas-confetti desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-
-  <h1>Juego de Memoria</h1>
-
-  <!-- Información del juego (cronómetro) -->
-  <div class="game-info">
-    <div class="timer" id="timer">Tiempo: 00:00</div>
-  </div>
-  
-  <!-- Tablero de juego -->
-  <div class="game-board" id="gameBoard"></div>
-
-  <!-- Botón para reiniciar el juego -->
-  <div class="controls">
-    <button id="restartBtn">Reiniciar Juego</button>
+  <!-- Pantalla para introducir el código QR -->
+  <div id="qrScreen" class="screen">
+    <h2>Introducir Código QR</h2>
+    <input type="text" id="qrInput" placeholder="Escanea o ingresa el código QR">
+    <br>
+    <button id="startGameBtn">Comenzar a Jugar</button>
   </div>
 
-  <!-- Modal al finalizar el juego -->
-  <div class="modal" id="endGameModal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModalBtn">&times;</span>
-      <h2>¡Felicidades!</h2>
-      <p>Has completado el juego en <span id="finalTime"></span> segundos.</p>
-      <label for="playerName">Ingresa tu nombre:</label>
-      <input type="text" id="playerName" placeholder="Tu nombre..." />
-      <button id="saveScoreBtn">Guardar puntuación</button>
+  <!-- Pantalla del juego -->
+  <div id="gameScreen" class="screen" style="display: none;">
+    <h1>Juego de Memoria</h1>
+    <div class="game-info">
+      <div class="timer" id="timer">Tiempo: 00:00</div>
     </div>
+    <div class="game-board" id="gameBoard"></div>
   </div>
 
-  <!-- Tabla de posiciones (puntuaciones) -->
-  <div class="scoreboard" id="scoreboard">
-    <h2>Tabla de Posiciones</h2>
-    <ol id="scoreList"></ol>
+  <!-- Pantalla de Game Over -->
+  <div id="gameOverScreen" class="screen" style="display: none;">
+    <h1>Game Over</h1>
+  </div>
+
+  <!-- Pantalla de Resultados -->
+  <div id="resultsScreen" class="screen" style="display: none;">
+    <h1>Resultados</h1>
+    <p id="resultText">10/10</p>
   </div>
 
   <script src="js/app.js"></script>
