@@ -11,22 +11,37 @@
   <!-- Pantalla para introducir el código QR -->
   <div id="qrScreen" class="screen">
     <img src="img/qr.png" alt="Código QR">
-    <br>
-    <button id="startGameBtn">Comenzar a jugar</button>
+    <div class="banner">
+      <h1 class="logo">
+        <span class="buk">Buk</span><span class="match">Match</span>
+      </h1>
+      <button id="startGameBtn">Comenzar a jugar</button>
+    </div>
+    
   </div>  
+
+
 
   <!-- Pantalla del juego -->
   <div id="gameScreen" class="screen" style="display: none;">
-    <h1>Juego de Memoria</h1>
-    <div class="game-info">
-      <div class="timer" id="timer">Tiempo: 00:00</div>
+    <div class="time-banner">
+      <span class="time-label">Tiempo:</span>
+      <span class="time-value" id="timer">00:00</span>
     </div>
     <div class="game-board" id="gameBoard"></div>
+    <div class="game-logo-container">
+      <img src="img/logo.png" alt="Logo" class="game-logo">
+    </div>
   </div>
 
   <!-- Pantalla de Game Over -->
   <div id="gameOverScreen" class="screen" style="display: none;">
-    <h1>Game Over</h1>
+    <div class="game-over-box">
+      <h1 class="game-over-title">
+        <span class="game">Game</span>
+        <span class="over">Over</span>
+      </h1>
+    </div>
   </div>
 
   <!-- Pantalla de Resultados -->

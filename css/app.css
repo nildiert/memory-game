@@ -1,3 +1,17 @@
+@font-face {
+	font-family: 'Gameplaya';
+	src: url('../fonts/Gameplaya\ Font.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Source Sans Pro';
+	src: url('../fonts/SourceSansPro-Black.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* Reglas globales */
 * {
 	box-sizing: border-box;
@@ -10,12 +24,12 @@ html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-  }
+}
   
-  body {
+body {
 	background: url("../img/background.png") no-repeat center center fixed;
 	background-size: cover;
-  }
+}
 
 /* Estilo para las pantallas */
 .screen {
@@ -25,30 +39,89 @@ html, body {
 
 /* Aseguramos que la pantalla QR se muestre al cargar la página */
 #qrScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;       /* Ocupa todo el alto de la pantalla */
-  text-align: center;
-  padding: 20px;       /* Para evitar que quede pegado a los bordes en pantallas pequeñas */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	text-align: center;
+	padding: 20px;
 }
 
 #qrScreen img {
-	max-width: 80%;      /* La imagen ocupará como máximo el 80% del ancho de la pantalla */
-	height: auto;        /* Mantiene la proporción original */
-	margin-bottom: 20px; /* Espacio entre la imagen y el botón */
-  }
+	max-width: 80%;
+	height: auto;
+	margin-bottom: 20px;
+}
 
-  #qrScreen button {
+#qrScreen button {
 	padding: 10px 20px;
 	font-size: 1rem;
 	cursor: pointer;
 	background-color: #F9B82C;
 	color: #fff;
 	border: none;
-	border-radius: 10px; /* Bordes redondeados */
-  }
+	border-radius: 10px;
+}
+
+/* Estilos para el banner de la pantalla inicial */
+.banner {
+	width: calc(100% + 40px);
+	margin-left: -20px;
+	margin-right: -20px;
+	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
+	padding: 20px 0;
+	margin-bottom: 30px;
+	font-family: 'Gameplaya';
+}
+
+.time-banner {
+	width: 100%;
+	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
+	padding: 1rem 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	margin-top: 5rem; /* Ajusta este valor para el margen deseado */
+	margin-bottom: 1rem;
+	font-family: 'Gameplaya', sans-serif;
+}
+  
+.time-label {
+	color: #F9B82C;
+	font-size: 1.5rem;
+	margin-right: 0.5rem;
+}
+  
+.time-value {
+	color: #FFFFFF;
+	font-size: 1.5rem;
+}
+
+.logo {
+	margin: 0;
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+.logo .buk {
+	color: #FFFFFF;
+}
+
+.logo .match {
+	color: #F9B82C;
+}
 
 /* Pantalla de juego */
 #gameScreen {
@@ -64,6 +137,17 @@ h1 {
 	font-size: 1.2rem;
 }
 
+.game-logo-container {
+	text-align: center;
+	margin-bottom: 1rem;
+}
+  
+.game-logo {
+	max-width: 40vw;
+	height: auto;
+	display: inline-block;
+}
+
 .timer {
 	background-color: #ddd;
 	display: inline-block;
@@ -76,6 +160,7 @@ h1 {
 	width: 90%;
 	max-width: 800px;
 	margin: 0 auto;
+	/* Si usas grid, generalmente no se necesitan prefijos hoy en día */
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-gap: 10px;
@@ -83,16 +168,14 @@ h1 {
 }
 
 /* Cartas adaptables con degradado en el "borde" */
-/* Se actualiza aspect-ratio para que las cartas sean rectángulos verticales */
 .card {
 	width: 100%;
-	aspect-ratio: 3 / 4; /* Rectángulos verticales: mayor altura que ancho */
+	aspect-ratio: 3 / 4;
 	perspective: 1000px;
 	cursor: pointer;
 	position: relative;
-	/* El degradado se aplica al contenedor de la carta */
 	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
-	padding: 5px; /* Este padding actúa como borde degradado */
+	padding: 5px;
 	border-radius: 8px;
 }
 
@@ -100,14 +183,17 @@ h1 {
 .card-inner {
 	width: 100%;
 	height: 100%;
+	-webkit-transition: -webkit-transform 0.6s;
 	transition: transform 0.6s;
+	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 	position: relative;
 }
 
 /* Al voltear la carta se rota el contenedor interno */
 .card.flipped .card-inner {
-	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+	    transform: rotateY(180deg);
 }
 
 /* Las caras de la carta */
@@ -117,19 +203,21 @@ h1 {
 	width: 100%;
 	height: 100%;
 	-webkit-backface-visibility: hidden;
-	backface-visibility: hidden;
+	    backface-visibility: hidden;
 	border-radius: 3px;
 	overflow: hidden;
 }
 
 /* La cara trasera (reverso) se muestra en estado sin voltear */
 .card-back {
-	transform: rotateY(0deg);
+	-webkit-transform: rotateY(0deg);
+	    transform: rotateY(0deg);
 }
 
 /* La cara frontal (contenido) se rota 180° para quedar oculta inicialmente */
 .card-front {
-	transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+	    transform: rotateY(180deg);
 }
 
 /* Estilo para las imágenes dentro de la carta */
@@ -140,8 +228,64 @@ h1 {
 	display: block;
 }
 
-/* Pantallas Game Over y Resultados */
-#gameOverScreen,
+#startGameBtn {
+	padding: 10px 20px;
+	font-size: 1rem;
+	cursor: pointer;
+	background-color: #F9B82C;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	font-family: 'Source Sans Pro', sans-serif;
+	margin-top: 20px;
+}
+
+/* Pantalla Game Over */
+#gameOverScreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999; /* Asegura que esté por encima de otros elementos */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Gameplaya';
+  }
+  
+
+  .game-over-box {
+	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
+	padding: 2rem;
+	border-radius: 10px;
+	text-align: center;
+  }
+
+  .game-over-box h1 {
+	margin: 0;
+	font-size: 3rem;
+	line-height: 1.2;
+  }
+
+.game-over-box .game {
+	color: #FFFFFF;
+	font-size: 15vw;
+}
+
+.game-over-box .over {
+	color: #F9B82C;
+	font-size: 15vw;
+}
+
+.game-over-box .game,
+.game-over-box .over {
+  display: block;
+  margin: 0;
+  line-height: 0.7
+}
+
+/* Pantalla Resultados */
 #resultsScreen {
 	margin-top: 100px;
 }

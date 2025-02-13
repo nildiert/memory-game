@@ -163,7 +163,7 @@ function displayTime(seconds) {
   const min = Math.floor(seconds / 60);
   const sec = seconds % 60;
   const formattedTime = `${min.toString().padStart(2, "0")}:${sec.toString().padStart(2, "0")}`;
-  timerElement.textContent = `Tiempo: ${formattedTime}`;
+  timerElement.textContent = formattedTime;
 }
 
 // ---------------------
@@ -184,8 +184,8 @@ function endGame() {
       resultsScreen.style.display = "none";
       qrScreen.style.display = "block";
       qrInput.value = "";
-    }, 3000);
-  }, 3000);
+    }, 5000);
+  }, 5000);
 }
 
 // ---------------------
