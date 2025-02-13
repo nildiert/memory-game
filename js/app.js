@@ -7,7 +7,6 @@ const gameOverScreen = document.getElementById("gameOverScreen");
 const resultsScreen  = document.getElementById("resultsScreen");
 
 const startGameBtn   = document.getElementById("startGameBtn");
-const qrInput        = document.getElementById("qrInput");
 
 const gameBoard      = document.getElementById("gameBoard");
 const timerElement   = document.getElementById("timer");
@@ -193,10 +192,6 @@ function endGame() {
 // Evento para iniciar el juego desde la pantalla QR
 // ---------------------
 startGameBtn.addEventListener("click", () => {
-  if (qrInput.value.trim() === "") {
-    alert("Por favor, ingresa el código QR");
-    return;
-  }
   qrScreen.style.display = "none";
   gameScreen.style.display = "block";
   startGame();

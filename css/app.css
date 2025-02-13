@@ -5,13 +5,17 @@
 	padding: 0;
 }
 
-body {
-	font-family: Arial, sans-serif;
-	background-color: #D0DEFB;
-	color: #333;
-	text-align: center;
-	padding: 20px;
-}
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+  }
+  
+  body {
+	background: url("../img/background.png") no-repeat center center fixed;
+	background-size: cover;
+  }
 
 /* Estilo para las pantallas */
 .screen {
@@ -21,22 +25,30 @@ body {
 
 /* Aseguramos que la pantalla QR se muestre al cargar la página */
 #qrScreen {
-	display: block;
-	margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;       /* Ocupa todo el alto de la pantalla */
+  text-align: center;
+  padding: 20px;       /* Para evitar que quede pegado a los bordes en pantallas pequeñas */
 }
 
-#qrScreen input {
-	padding: 10px;
-	font-size: 1rem;
-	margin-bottom: 20px;
-	width: 300px;
-}
+#qrScreen img {
+	max-width: 80%;      /* La imagen ocupará como máximo el 80% del ancho de la pantalla */
+	height: auto;        /* Mantiene la proporción original */
+	margin-bottom: 20px; /* Espacio entre la imagen y el botón */
+  }
 
-#qrScreen button {
+  #qrScreen button {
 	padding: 10px 20px;
 	font-size: 1rem;
 	cursor: pointer;
-}
+	background-color: #F9B82C;
+	color: #fff;
+	border: none;
+	border-radius: 10px; /* Bordes redondeados */
+  }
 
 /* Pantalla de juego */
 #gameScreen {
