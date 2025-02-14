@@ -243,7 +243,25 @@ function endGame() {
 // Evento para iniciar el juego desde la pantalla QR
 // ---------------------
 startGameBtn.addEventListener("click", () => {
+  // Elimina las clases de animación que se hayan quedado en los elementos
+  const timeBanner = document.querySelector('.time-banner');
+  const board = document.getElementById("gameBoard");
+  
+  // Remueve las clases de animación del banner y del tablero
+  if(timeBanner) timeBanner.classList.remove('slide-up');
+  if(board) board.classList.remove('slide-left');
+  
+  // Remueve las clases de animación de gameOverScreen y resultsScreen (si se aplicaron)
+  gameOverScreen.classList.remove('slide-in-from-right', 'slide-out-to-left');
+  resultsScreen.classList.remove('slide-in-from-left', 'slide-left');
+  
+  // Asegúrate de ocultar las pantallas que pudieran estar visibles
   qrScreen.style.display = "none";
+  gameOverScreen.style.display = "none";
+  resultsScreen.style.display = "none";
+  
+  // Muestra la pantalla del juego y reinicia el juego
   gameScreen.style.display = "block";
   startGame();
 });
+
