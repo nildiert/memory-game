@@ -295,7 +295,7 @@
   
   /* Pantalla Resultados */
   #resultsScreen {
-	display: flex !important;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
