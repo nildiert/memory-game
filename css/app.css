@@ -29,6 +29,8 @@
   body {
 	background: url("../img/background.png") no-repeat center center fixed;
 	background-size: cover;
+	display: flex;
+	justify-content: center;
   }
   
   /* Estilo para las pantallas */
@@ -104,6 +106,7 @@
 	margin: 0;
 	font-size: 2.5rem;
 	font-weight: bold;
+	font-family: 'Gameplaya';
   }
   
   .logo .buk {
@@ -269,36 +272,46 @@
   
   /* Banner azul y Resultados */
   .banner-blue {
-	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
-	padding: 1rem;
-	border-radius: 0.625rem;
-	margin: 1rem 0;
+	background: #2B3C6A;
+	width: calc(100% + 2rem);
+	padding: .2rem;
 	color: #fff;
+	text-align: center;
   }
   
   .banner-blue h2 {
 	margin: 0;
-	font-size: 2rem;
+	font-size: 1.4rem;
   }
-  
-  .results-box .score {
-	font-size: 2rem;
-	color: #fff;
-	margin: 1rem 0;
+
+  .results-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(#2F4DAA, #2B3C6A);
+	padding: 1rem;
+	margin: 2rem;
+	border-radius: .7rem;
   }
-  
-  .results-box .time-display {
-	font-size: 1.5rem;
-	color: #fff;
-	margin-top: 1rem;
+
+  #resultsScreen img {
+	width: 6rem;
+	margin-bottom: 3rem;
   }
   
   /* Pantalla Resultados */
   #resultsScreen {
+	flex-direction: column;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+	width: 100vh;
+	background-image: url(../img/background-final.png);
+	background-repeat: no-repeat;
+    background-size: contain;  /* Ajusta la imagen para que se vea completamente sin distorsión */
+    background-position: center; 
   }
   
   #resultsScreen .game-over-box.results-box {
@@ -321,7 +334,7 @@
   }
   
   .results-box .score {
-	font-size: 2rem;
+	font-size: 4rem;
 	color: #fff;
 	margin: 1rem 0;
   }
@@ -329,8 +342,14 @@
   .results-box .time-display {
 	font-size: 1.5rem;
 	color: #fff;
-	margin-top: 1rem;
+	background-color: #2B3C6A;
+	font-family: 'Gameplaya';
+	color: #F9B82C;
+	padding: .2rem .5rem;
   }
+ #finalTime {
+	color: #fff;
+ } 
 
   @media (max-width: 768px) {
 	#qrScreen img {
