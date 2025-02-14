@@ -197,7 +197,7 @@ function endGame() {
   clearInterval(timer);
   isGameActive = false;
   
-  // Seleccionamos los elementos a animar
+  // Seleccionamos los elementos que animaremos
   const timeBanner = document.querySelector('.time-banner');
   const board = document.getElementById("gameBoard");
   
@@ -229,13 +229,12 @@ function endGame() {
     resultsScreen.classList.add('slide-in-from-left');
   }, 5000);
   
-  // Finalmente, resultsScreen permanece 3 segundos y luego desaparece para mostrar qrScreen
+  // Después de 3 segundos mostrando resultsScreen, ocultamos resultsScreen y mostramos qrScreen
   setTimeout(() => {
     resultsScreen.style.display = "none";
     qrScreen.style.display = "flex";
   }, 8000);
 }
-
 
 
 
