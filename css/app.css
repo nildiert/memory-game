@@ -1,186 +1,178 @@
 @font-face {
 	font-family: 'Gameplaya';
-	src: url('../fonts/Gameplaya\ Font.ttf') format('truetype');
+	src: url('../fonts/Gameplaya Font.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
-
-@font-face {
+  }
+  
+  @font-face {
 	font-family: 'Source Sans Pro';
 	src: url('../fonts/SourceSansPro-Black.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
-
-/* Reglas globales */
-* {
+  }
+  
+  /* Reglas globales */
+  * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-}
-
-html, body {
+  }
+  
+  html, body {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
-}
+  }
   
-body {
+  body {
 	background: url("../img/background.png") no-repeat center center fixed;
 	background-size: cover;
-}
-
-/* Estilo para las pantallas */
-.screen {
+	display: flex;
+	justify-content: center;
+  }
+  
+  /* Estilo para las pantallas */
+  .screen {
 	/* Por defecto se ocultan; se mostrará cambiando el display vía JS */
 	display: none;
-}
-
-/* Aseguramos que la pantalla QR se muestre al cargar la página */
-#qrScreen {
-	display: -webkit-box;
-	display: -ms-flexbox;
+  }
+  
+  /* Pantalla QR */
+  #qrScreen {
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	    -ms-flex-direction: column;
-	        flex-direction: column;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
 	text-align: center;
-	padding: 20px;
-}
-
-#qrScreen img {
-	max-width: 80%;
+	padding: 1.25rem; /* 20px */
+  }
+  
+  #qrScreen img {
+	max-width: 25%;
 	height: auto;
-	margin-bottom: 20px;
-}
-
-#qrScreen button {
-	padding: 10px 20px;
+	margin-bottom: 1.25rem; /* 20px */
+  }
+  
+  #qrScreen button {
+	padding: 0.625rem 1.25rem; /* 10px 20px */
 	font-size: 1rem;
 	cursor: pointer;
 	background-color: #F9B82C;
 	color: #fff;
 	border: none;
-	border-radius: 10px;
-}
-
-/* Estilos para el banner de la pantalla inicial */
-.banner {
-	width: calc(100% + 40px);
-	margin-left: -20px;
-	margin-right: -20px;
+	border-radius: 0.625rem; /* 10px */
+  }
+  
+  /* Banner de la pantalla inicial */
+  .banner {
+	width: calc(100% + 2.5rem); /* 40px extra */
+	margin-left: -1.25rem; /* -20px */
+	margin-right: -1.25rem; /* -20px */
 	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
-	padding: 20px 0;
-	margin-bottom: 30px;
+	padding: 1.25rem 0; /* 20px vertical */
+	margin-bottom: 1.875rem; /* 30px */
 	font-family: 'Gameplaya';
-}
-
-.time-banner {
+  }
+  
+  /* Time Banner */
+  .time-banner {
 	width: 100%;
 	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
 	padding: 1rem 0;
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-pack: center;
-	    -ms-flex-pack: center;
-	        justify-content: center;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	margin-top: 5rem; /* Ajusta este valor para el margen deseado */
+	align-items: center;
+	justify-content: center;
+	margin-top: 5rem;
 	margin-bottom: 1rem;
 	font-family: 'Gameplaya', sans-serif;
-}
+  }
   
-.time-label {
+  .time-label {
 	color: #F9B82C;
 	font-size: 1.5rem;
 	margin-right: 0.5rem;
-}
+  }
   
-.time-value {
+  .time-value {
 	color: #FFFFFF;
 	font-size: 1.5rem;
-}
-
-.logo {
+  }
+  
+  /* Título Logo */
+  .logo {
 	margin: 0;
 	font-size: 2.5rem;
 	font-weight: bold;
-}
-
-.logo .buk {
+	font-family: 'Gameplaya';
+  }
+  
+  .logo .buk {
 	color: #FFFFFF;
-}
-
-.logo .match {
+  }
+  
+  .logo .match {
 	color: #F9B82C;
-}
-
-/* Pantalla de juego */
-#gameScreen {
+  }
+  
+  /* Pantalla de juego */
+  #gameScreen {
 	/* Se activará al comenzar el juego */
-}
-
-h1 {
-	margin-bottom: 20px;
-}
-
-.game-info {
-	margin-bottom: 20px;
+  }
+  
+  h1 {
+	margin-bottom: 1.25rem; /* 20px */
+  }
+  
+  .game-info {
+	margin-bottom: 1.25rem; /* 20px */
 	font-size: 1.2rem;
-}
-
-.game-logo-container {
+  }
+  
+  .game-logo-container {
 	text-align: center;
 	margin-bottom: 1rem;
-}
+  }
   
-.game-logo {
+  .game-logo {
 	max-width: 40vw;
 	height: auto;
 	display: inline-block;
-}
-
-.timer {
+  }
+  
+  .timer {
 	background-color: #ddd;
 	display: inline-block;
-	padding: 10px 20px;
-	border-radius: 5px;
-}
-
-/* Cuadrícula: 5 columnas para 20 cartas (4 filas) */
-.game-board {
+	padding: 0.625rem 1.25rem; /* 10px 20px */
+	border-radius: 0.3125rem; /* 5px */
+  }
+  
+  /* Cuadrícula de cartas */
+  .game-board {
 	width: 90%;
-	max-width: 800px;
+	max-width: 50rem; /* 800px */
 	margin: 0 auto;
-	/* Si usas grid, generalmente no se necesitan prefijos hoy en día */
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	grid-gap: 10px;
-	margin-bottom: 20px;
-}
-
-/* Cartas adaptables con degradado en el "borde" */
-.card {
+	grid-gap: 0.625rem; /* 10px */
+	margin-bottom: 1.25rem; /* 20px */
+  }
+  
+  /* Cartas */
+  .card {
 	width: 100%;
 	aspect-ratio: 3 / 4;
-	perspective: 1000px;
+	perspective: 62.5rem; /* 1000px */
 	cursor: pointer;
 	position: relative;
 	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
-	padding: 5px;
-	border-radius: 8px;
-}
-
-/* Contenedor interno de la carta (sin degradado) */
-.card-inner {
+	padding: 0.3125rem; /* 5px */
+	border-radius: 0.5rem; /* 8px */
+  }
+  
+  .card-inner {
 	width: 100%;
 	height: 100%;
 	-webkit-transition: -webkit-transform 0.6s;
@@ -188,104 +180,179 @@ h1 {
 	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 	position: relative;
-}
-
-/* Al voltear la carta se rota el contenedor interno */
-.card.flipped .card-inner {
+  }
+  
+  .card.flipped .card-inner {
 	-webkit-transform: rotateY(180deg);
-	    transform: rotateY(180deg);
-}
-
-/* Las caras de la carta */
-.card-front,
-.card-back {
+	transform: rotateY(180deg);
+  }
+  
+  .card-front,
+  .card-back {
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	-webkit-backface-visibility: hidden;
-	    backface-visibility: hidden;
-	border-radius: 3px;
+	backface-visibility: hidden;
+	border-radius: 0.1875rem; /* 3px */
 	overflow: hidden;
-}
-
-/* La cara trasera (reverso) se muestra en estado sin voltear */
-.card-back {
+  }
+  
+  .card-back {
 	-webkit-transform: rotateY(0deg);
-	    transform: rotateY(0deg);
-}
-
-/* La cara frontal (contenido) se rota 180° para quedar oculta inicialmente */
-.card-front {
+	transform: rotateY(0deg);
+  }
+  
+  .card-front {
 	-webkit-transform: rotateY(180deg);
-	    transform: rotateY(180deg);
-}
-
-/* Estilo para las imágenes dentro de la carta */
-.card img {
+	transform: rotateY(180deg);
+  }
+  
+  .card img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	display: block;
-}
-
-#startGameBtn {
-	padding: 10px 20px;
+  }
+  
+  #startGameBtn {
+	padding: 0.625rem 1.25rem;
 	font-size: 1rem;
 	cursor: pointer;
 	background-color: #F9B82C;
 	color: #fff;
 	border: none;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	font-family: 'Source Sans Pro', sans-serif;
-	margin-top: 20px;
-}
-
-/* Pantalla Game Over */
-#gameOverScreen {
+	margin-top: 1.25rem;
+  }
+  
+  /* Pantalla Game Over */
+  #gameOverScreen {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
-	z-index: 9999; /* Asegura que esté por encima de otros elementos */
+	height: 100vh;
+	z-index: 9999;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-family: 'Gameplaya';
   }
   
-
-  .game-over-box {
+  #gameOverScreen .game-over-box {
 	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
 	padding: 2rem;
-	border-radius: 10px;
+	border-radius: 0.625rem;
 	text-align: center;
   }
-
-  .game-over-box h1 {
+  
+  #gameOverScreen .game-over-box h1.game-over-title {
+	font-family: 'Gameplaya', sans-serif !important;
 	margin: 0;
-	font-size: 3rem;
-	line-height: 1.2;
+	font-size: 2.5rem;
+	font-weight: bold;
+	text-align: center;
+  }
+  
+  #gameOverScreen .game-over-box h1.game-over-title .game {
+	color: #FFFFFF;
+  }
+  
+  #gameOverScreen .game-over-box h1.game-over-title .over {
+	color: #F9B82C;
+  }
+  
+  .game-over-box .game,
+  .game-over-box .over {
+	display: block;
+	margin: 0;
+	line-height: 0.7;
+  }
+  
+  /* Banner azul y Resultados */
+  .banner-blue {
+	background: #2B3C6A;
+	width: calc(100% + 2rem);
+	padding: .2rem;
+	color: #fff;
+	text-align: center;
+  }
+  
+  .banner-blue h2 {
+	margin: 0;
+	font-size: 1.4rem;
   }
 
-.game-over-box .game {
+  .results-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(#2F4DAA, #2B3C6A);
+	padding: 1rem;
+	margin: 2rem;
+	border-radius: .7rem;
+  }
+
+  #resultsScreen img {
+	width: 6rem;
+	margin-bottom: 3rem;
+  }
+  
+  /* Pantalla Resultados */
+  #resultsScreen {
+	flex-direction: column;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100vh;
+	background-image: url(../img/background-final.png);
+	background-repeat: no-repeat;
+    background-size: contain;  /* Ajusta la imagen para que se vea completamente sin distorsión */
+    background-position: center; 
+  }
+  
+  #resultsScreen .game-over-box.results-box {
+	font-family: 'Source Sans Pro', sans-serif;
+  }
+  
+  #resultsScreen .game-over-box.results-box h1.game-over-title {
+	font-family: 'Gameplaya', sans-serif !important;
+	margin: 0;
+	font-size: 2.5rem;
+	font-weight: bold;
+  }
+  
+  #resultsScreen .game-over-box.results-box h1.game-over-title .buk {
 	color: #FFFFFF;
-	font-size: 15vw;
-}
-
-.game-over-box .over {
+  }
+  
+  #resultsScreen .game-over-box.results-box h1.game-over-title .match {
 	color: #F9B82C;
-	font-size: 15vw;
-}
+  }
+  
+  .results-box .score {
+	font-size: 4rem;
+	color: #fff;
+	margin: 1rem 0;
+  }
+  
+  .results-box .time-display {
+	font-size: 1.5rem;
+	color: #fff;
+	background-color: #2B3C6A;
+	font-family: 'Gameplaya';
+	color: #F9B82C;
+	padding: .2rem .5rem;
+  }
+ #finalTime {
+	color: #fff;
+ } 
 
-.game-over-box .game,
-.game-over-box .over {
-  display: block;
-  margin: 0;
-  line-height: 0.7
-}
-
-/* Pantalla Resultados */
-#resultsScreen {
-	margin-top: 100px;
-}
+  @media (max-width: 768px) {
+	#qrScreen img {
+	  max-width: 60%;
+	}
+  }

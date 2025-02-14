@@ -96,10 +96,10 @@ function createBoard() {
 // Manejar el volteo de una carta
 // ---------------------
 function flipCard(cardElement, imgName) {
+  if (!isGameActive) return;
   if (cardElement.classList.contains("flipped") || flippedCards.length === 2) {
     return;
   }
-
   cardElement.classList.add("flipped");
   flippedCards.push({ cardElement, imgName });
 
@@ -142,9 +142,27 @@ function checkForMatch() {
 // Iniciar el juego
 // ---------------------
 function startGame() {
+  // Crear el tablero; por defecto, las cartas están ocultas (sin "flipped")
   createBoard();
-  startTimer();
-  isGameActive = true;
+
+  // Desactivar la interacción del usuario mientras se muestra la previsualización
+  isGameActive = false;
+
+  // Seleccionar todas las cartas del tablero
+  const allCards = document.querySelectorAll('.card');
+
+  // Paso 1: Esperar 1 segundo con las cartas ocultas
+  setTimeout(() => {
+    // Paso 2: Voltear todas las cartas para mostrarlas
+    allCards.forEach(card => card.classList.add('flipped'));
+
+    // Después de 2 segundos, volver a ocultarlas y activar el juego
+    setTimeout(() => {
+      allCards.forEach(card => card.classList.remove('flipped'));
+      startTimer();       // Inicia el cronómetro
+      isGameActive = true; // Habilita la interacción con las cartas
+    }, 2000);
+  }, 1000);
 }
 
 // ---------------------
@@ -172,21 +190,30 @@ function displayTime(seconds) {
 function endGame() {
   clearInterval(timer);
   isGameActive = false;
-
+  
+  // Ocultamos todas las pantallas
+  qrScreen.style.display = "none";
   gameScreen.style.display = "none";
-  gameOverScreen.style.display = "block";
-
+  resultsScreen.style.display = "none";
+  
+  // Mostramos la pantalla de Game Over
+  gameOverScreen.style.display = "flex";
+  
+  // Después de 5 segundos, ocultamos Game Over y mostramos Resultados
   setTimeout(() => {
     gameOverScreen.style.display = "none";
-    resultsScreen.style.display = "block";
-
+    document.getElementById("finalTime").textContent = timerElement.textContent;
+    resultsScreen.style.display = "flex";
+    
+    // Después de 5 segundos, ocultamos Resultados y volvemos a la pantalla QR
     setTimeout(() => {
       resultsScreen.style.display = "none";
-      qrScreen.style.display = "block";
-      qrInput.value = "";
-    }, 5000);
+      qrScreen.style.display = "flex";
+    }, 7000);
   }, 5000);
 }
+
+
 
 // ---------------------
 // Evento para iniciar el juego desde la pantalla QR
