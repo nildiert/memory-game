@@ -242,12 +242,17 @@
 	padding: 2rem;
 	border-radius: 0.625rem;
 	text-align: center;
+	width: 40vh;
+	height: 25vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
   }
   
   #gameOverScreen .game-over-box h1.game-over-title {
 	font-family: 'Gameplaya', sans-serif !important;
 	margin: 0;
-	font-size: 2.5rem;
+	font-size: 6rem;
 	font-weight: bold;
 	text-align: center;
   }
