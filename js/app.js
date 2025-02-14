@@ -117,11 +117,16 @@ function checkForMatch() {
   if (card1.imgName === card2.imgName) {
     matchedCount += 2;
 
-    // Explosión de confetti al encontrar un match
+    // Obtener la posición de la última carta (card2)
+    const rect = card2.cardElement.getBoundingClientRect();
+    const originX = (rect.left + rect.width / 2) / window.innerWidth;
+    const originY = (rect.top + rect.height / 2) / window.innerHeight;
+
+    // Dispara el confetti usando el centro de card2 como origen
     confetti({
       particleCount: 100,
       spread: 70,
-      origin: { y: 0.6 }
+      origin: { x: originX, y: originY }
     });
 
     flippedCards = [];
@@ -137,6 +142,7 @@ function checkForMatch() {
     }, 1000);
   }
 }
+
 
 // ---------------------
 // Iniciar el juego
@@ -191,27 +197,46 @@ function endGame() {
   clearInterval(timer);
   isGameActive = false;
   
-  // Ocultamos todas las pantallas
-  qrScreen.style.display = "none";
-  gameScreen.style.display = "none";
-  resultsScreen.style.display = "none";
+  // Seleccionamos los elementos a animar
+  const timeBanner = document.querySelector('.time-banner');
+  const board = document.getElementById("gameBoard");
   
-  // Mostramos la pantalla de Game Over
-  gameOverScreen.style.display = "flex";
+  // 1. Animar: time-banner sube y el tablero se desplaza a la izquierda (1s)
+  timeBanner.classList.add('slide-up');
+  board.classList.add('slide-left');
   
-  // Después de 5 segundos, ocultamos Game Over y mostramos Resultados
+  // Después de 1 segundo, ocultamos el juego y mostramos gameOverScreen
+  setTimeout(() => {
+    gameScreen.style.display = "none";
+    
+    // 2. gameOverScreen aparece desde la derecha
+    gameOverScreen.style.display = "flex";
+    gameOverScreen.classList.add('slide-in-from-right');
+  }, 1000);
+  
+  // Después de 4 segundos (1s de animación inicial + 3s mostrando gameOverScreen):
+  setTimeout(() => {
+    // 3. gameOverScreen se desplaza hacia la izquierda para desaparecer
+    gameOverScreen.classList.remove('slide-in-from-right');
+    gameOverScreen.classList.add('slide-out-to-left');
+  }, 4000);
+  
+  // Después de 5 segundos, ocultamos gameOverScreen y mostramos resultsScreen
   setTimeout(() => {
     gameOverScreen.style.display = "none";
-    document.getElementById("finalTime").textContent = timerElement.textContent;
     resultsScreen.style.display = "flex";
-    
-    // Después de 5 segundos, ocultamos Resultados y volvemos a la pantalla QR
-    setTimeout(() => {
-      resultsScreen.style.display = "none";
-      qrScreen.style.display = "flex";
-    }, 7000);
+    // 4. resultsScreen aparece desde la izquierda
+    resultsScreen.classList.add('slide-in-from-left');
   }, 5000);
+  
+  // Finalmente, resultsScreen permanece 3 segundos y luego desaparece para mostrar qrScreen
+  setTimeout(() => {
+    resultsScreen.style.display = "none";
+    qrScreen.style.display = "flex";
+  }, 8000);
 }
+
+
 
 
 
