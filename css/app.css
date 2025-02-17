@@ -56,7 +56,7 @@
   
   #qrScreen button {
 	padding: 0.625rem 1.25rem; /* 10px 20px */
-	font-size: 1rem;
+	font-size: 1.5rem;
 	cursor: pointer;
 	background-color: #F9B82C;
 	color: #fff;
@@ -85,26 +85,21 @@
 	justify-content: center;
 	margin-top: 5rem;
 	margin-bottom: 1rem;
-	font-family: 'Gameplaya', sans-serif;
+	font-family: 'Gameplaya';
+	font-size: 2.7rem;
   }
   
   .time-label {
 	color: #F9B82C;
-	font-size: 1.5rem;
 	margin-right: 0.5rem;
   }
   
   .time-value {
 	color: #FFFFFF;
-	font-size: 1.5rem;
   }
   
   /* Título Logo */
-  .logo {
-	margin: 0;
-	font-size: 2.5rem;
-	font-weight: bold;
-  }
+
   
   .logo .buk {
 	color: #FFFFFF;
@@ -278,44 +273,54 @@
   
   /* Banner azul y Resultados */
   .banner-blue {
-	background: linear-gradient(to bottom, #2F4DAA, #2B3C6A);
-	padding: 1rem;
-	border-radius: 0.625rem;
+	background: #091569;
+	/* background: linear-gradient(to bottom, #2F4DAA, #2B3C6A); */
+	padding: .2rem;
+	width: calc(100% + 2rem);
 	margin: 1rem 0;
 	color: #fff;
+	text-align: center;
   }
   
   .banner-blue h2 {
 	margin: 0;
-	font-size: 2rem;
+	font-size: 1.4rem;
   }
   
   .results-box .score {
-	font-size: 2rem;
+	font-size: 6rem;
 	color: #fff;
-	margin: 1rem 0;
+	margin: 0;
   }
-  
-  .results-box .time-display {
-	font-size: 1.5rem;
+
+  #finalTime {
 	color: #fff;
-	margin-top: 1rem;
   }
   
   /* Pantalla Resultados */
   #resultsScreen {
+	flex-direction: column;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
   }
-  
-  #resultsScreen .game-over-box.results-box {
-	font-family: 'Source Sans Pro', sans-serif;
+
+  #resultsScreen img {
+	width: 6rem;
+	margin-bottom: 3rem;
+  }
+
+  .logo {
+	margin: 0;
+	font-size: 3.2rem;
+	font-weight: bold;
+	font-family: 'Gameplaya';
   }
   
+
+  
   #resultsScreen .game-over-box.results-box h1.game-over-title {
-	font-family: 'Gameplaya', sans-serif !important;
 	margin: 0;
 	font-size: 2.5rem;
 	font-weight: bold;
@@ -328,17 +333,30 @@
   #resultsScreen .game-over-box.results-box h1.game-over-title .match {
 	color: #F9B82C;
   }
-  
-  .results-box .score {
-	font-size: 2rem;
-	color: #fff;
-	margin: 1rem 0;
+
+    #resultsScreen .game-over-box.results-box {
+	font-family: 'Source Sans Pro';
+	width: 40vh;
+  }
+
+  .results-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(#2F4DAA, #2B3C6A);
+	padding: 1rem;
+	margin: 2rem;
+	border-radius: .7rem;
   }
   
   .results-box .time-display {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	color: #fff;
-	margin-top: 1rem;
+	background-color: #091569;
+	font-family: 'Gameplaya';
+	color: #F9B82C;
+	padding: .2rem .5rem;
   }
 
   @media (max-width: 768px) {

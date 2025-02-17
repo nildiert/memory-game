@@ -224,16 +224,17 @@ function endGame() {
   // Después de 5 segundos, ocultamos gameOverScreen y mostramos resultsScreen
   setTimeout(() => {
     gameOverScreen.style.display = "none";
+    document.getElementById("finalTime").textContent = timerElement.textContent;
     resultsScreen.style.display = "flex";
     // 4. resultsScreen aparece desde la izquierda
-    resultsScreen.classList.add('slide-in-from-left');
+    resultsScreen.classList.add('slide-in-from-right');
   }, 5000);
   
   // Después de 3 segundos mostrando resultsScreen, ocultamos resultsScreen y mostramos qrScreen
   setTimeout(() => {
     resultsScreen.style.display = "none";
     qrScreen.style.display = "flex";
-  }, 8000);
+  }, 10000);
 }
 
 
@@ -253,7 +254,7 @@ startGameBtn.addEventListener("click", () => {
   
   // Remueve las clases de animación de gameOverScreen y resultsScreen (si se aplicaron)
   gameOverScreen.classList.remove('slide-in-from-right', 'slide-out-to-left');
-  resultsScreen.classList.remove('slide-in-from-left', 'slide-left');
+  resultsScreen.classList.remove('slide-in-from-right', 'slide-out-to-left');
   
   // Asegúrate de ocultar las pantallas que pudieran estar visibles
   qrScreen.style.display = "none";
