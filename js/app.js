@@ -167,7 +167,7 @@ function startGame() {
       allCards.forEach(card => card.classList.remove('flipped'));
       startTimer();       // Inicia el cronómetro
       isGameActive = true; // Habilita la interacción con las cartas
-    }, 2000);
+    }, 3000);
   }, 1000);
 }
 
