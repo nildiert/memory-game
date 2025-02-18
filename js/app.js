@@ -227,7 +227,7 @@ function endGame() {
     document.getElementById("finalTime").textContent = timerElement.textContent;
     resultsScreen.style.display = "flex";
     // 4. resultsScreen aparece desde la izquierda
-    resultsScreen.classList.add('slide-in-from-right');
+    // resultsScreen.classList.add('slide-in-from-right');
   }, 5000);
   
   // Después de 3 segundos mostrando resultsScreen, ocultamos resultsScreen y mostramos qrScreen

@@ -380,6 +380,28 @@
 	}
   }
 
+  @media (max-width: 768px) {
+	/* Aseguramos que la caja de resultados ocupe la mayor parte del ancho y esté centrada */
+	#resultsScreen .game-over-box.results-box {
+	  width: 90%;
+	  margin: 0 auto;
+	  padding: 1rem;
+	}
+  
+	/* Reducimos ligeramente el tamaño de la tipografía para que se ajuste mejor */
+	#resultsScreen .game-over-box.results-box h1.game-over-title {
+	  font-size: 2rem;
+	}
+	
+	.results-box .score {
+	  font-size: 3rem;
+	}
+	
+	.results-box .time-display {
+	  font-size: 1.2rem;
+	}
+  }
+
   /* Animación para que el time-banner suba */
 @keyframes slideUp {
   from { transform: translateY(0); }
