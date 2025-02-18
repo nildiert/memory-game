@@ -49,7 +49,7 @@
   }
   
   #qrScreen img {
-	max-width: 25%;
+	max-width: 50%;
 	height: auto;
 	margin-bottom: 1.25rem; /* 20px */
   }
@@ -100,7 +100,15 @@
   
   /* Título Logo */
 
-  
+  .results-logo .buk {
+	color: #FFFFFF;
+  }
+
+  .results-logo .match {
+	color: #F9B82C;
+  }
+
+
   .logo .buk {
 	color: #FFFFFF;
   }
@@ -251,7 +259,7 @@
   #gameOverScreen .game-over-box h1.game-over-title {
 	font-family: 'Gameplaya', sans-serif !important;
 	margin: 0;
-	font-size: 6rem;
+	font-size: 12rem;
 	font-weight: bold;
 	text-align: center;
   }
@@ -313,7 +321,14 @@
 
   .logo {
 	margin: 0;
-	font-size: 3.2rem;
+	font-size: 8.2rem;
+	font-weight: bold;
+	font-family: 'Gameplaya';
+  }
+
+  .results-logo {
+	margin: 0;
+	font-size: 4.2rem;
 	font-weight: bold;
 	font-family: 'Gameplaya';
   }
